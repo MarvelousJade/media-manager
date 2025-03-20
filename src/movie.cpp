@@ -50,7 +50,7 @@ namespace seneca {
 	  };
 	
 	Movie* Movie::createItem(const std::string& strMovie) {
-		if (strMovie.empty() || strMovie[0] == '#') throw std::invalid_argument("Not a valid movie.");
+		if (strMovie.empty() || strMovie[0] == '#') throw "Not a valid movie.";
 
 		vector<string> movieTokens;
 		movieTokens = Book::split(strMovie, ',');

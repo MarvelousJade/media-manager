@@ -7,7 +7,7 @@
 
 namespace seneca {
 	using namespace std;
-	TvShow::TvShow(int id, const std::string& title, const std::string& summary, unsigned short year) : MediaItem(title, summary, year), m_id(id) {}; 
+	TvShow::TvShow(const string& id, const std::string& title, const std::string& summary, unsigned short year) : MediaItem(title, summary, year), m_id(id) {}; 
 
 	void TvShow::display(std::ostream& out) const
 	  {
@@ -64,15 +64,15 @@ namespace seneca {
 	  };
 
 	TvShow* TvShow::createItem(const std::string& strShow) {
-		if (strShow.empty() || strShow[0] == '#') throw invalid_argument("Not a valid Book.");
+		if (strShow.empty() || strShow[0] == '#') throw "Not a valid Book.";
 
 		vector<string> tvShowTokens;
 		tvShowTokens = Book::split(strShow, ',');
-		int id;
+		string id;
 		string title, summary; 
 		unsigned short year; 
 
-		id = stoi(tvShowTokens[0]); 
+		id = tvShowTokens[0]; 
 		title = tvShowTokens[1];
 		stringstream ss(tvShowTokens[2]);
 		ss >> year;
@@ -82,21 +82,27 @@ namespace seneca {
 	};
 	
 	double TvShow::getEpisodeAverageLength() const {
-		double averageLength = 0.0;
-		for (auto episode : m_episodes) {
-			averageLength += episode.m_length;
+		if (m_episodes.empty()) return 0.0;
+
+		double totalSeconds = 0;
+
+		for (auto& episode : m_episodes) {
+			int seconds = episode.m_length.tm_hour * 3600 + episode.m_length.tm_min * 60 + episode.m_length.tm_sec; 
+			totalSeconds += seconds ;
 		};
-		return averageLength /= m_episodes.size();
+
+		return totalSeconds / m_episodes.size();
 	};
 
 	list<string> TvShow::getLongEpisodes() const {
 		list<string> longEpisodes;	
-		unsigned int hour = 1;
-		unsigned int minutes = 60;
-		unsigned int seconds = 60;
-		
-		for (auto episode : m_episodes) {
-			if (episode.m_length >= hour * minutes * seconds)
+		int hour = 3600;	
+		int lengthInSeconds = 0;
+	
+		for (auto& episode : m_episodes) {
+			 lengthInSeconds = episode.m_length.tm_hour * 3600 + episode.m_length.tm_min * 60 + episode.m_length.tm_sec; 
+
+			if (lengthInSeconds >= 3600)
 				longEpisodes.push_back(episode.m_title);
 		};
 		

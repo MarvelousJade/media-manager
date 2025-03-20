@@ -15,7 +15,7 @@ namespace seneca {
 	void Collection::setObserver(void (*observer)(const Collection&, const MediaItem&)) { m_observer = observer; };
 
 	Collection& Collection::operator+=(MediaItem* item) {
-		for (auto m_item : m_mediaItems) {
+		for (auto& m_item : m_mediaItems) {
 			if ( item->getTitle() == m_item->getTitle()) {
 				delete item;
 				return *this;
@@ -36,7 +36,7 @@ namespace seneca {
 	};
 
 	MediaItem* Collection::operator[](const std::string& title) const {
-		for (auto m_item : m_mediaItems) {
+		for (auto& m_item : m_mediaItems) {
 			if(m_item->getTitle() == title) return m_item;
 		};		
 		
@@ -44,7 +44,7 @@ namespace seneca {
 	};
 
 	void Collection::removeQuotes() {
-		for (auto m_item : m_mediaItems) {
+		for (auto& m_item : m_mediaItems) {
 			string title = m_item->getTitle();
 			if (title.size() >= 2) {
 				if (title.front() == '"' && title.back() == '"') {
@@ -71,7 +71,7 @@ namespace seneca {
 
 	ostream& operator<<(ostream& os, const Collection& collection) {
 		for (int i = 0; i < collection.size(); i++) {
-			os << collection[i];
+			collection[i]->display(os);
 		};
 
 		return os;

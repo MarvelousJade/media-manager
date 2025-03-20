@@ -26,6 +26,10 @@ namespace seneca
 		return tokens;
 	};	
 
+	void Book::split(std::string& s) {
+		MediaItem::trim(s);
+	};
+
 	Book::Book(const std::string& author, const std::string& title, const std::string& country, const std::string& summary, unsigned short year, double price) : MediaItem(title, summary, year), m_author(author), m_country(country), m_price(price) {};
 
 	void Book::display(std::ostream& out) const
@@ -67,7 +71,7 @@ namespace seneca
 	};
 
 	Book* Book::createItem(const std::string& strBook) {
-		if (strBook.empty() || strBook[0] == '#') throw invalid_argument("Not a valid Book.");
+		if (strBook.empty() || strBook[0] == '#') throw "Not a valid Book.";
 
 		vector<string> bookTokens;
 		bookTokens = Book::split(strBook, ',');
