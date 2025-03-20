@@ -2,6 +2,8 @@
 #include "settings.h"
 #include "mediaItem.h"
 #include <iomanip>
+#include <stdexcept>
+#include <string>
 #include <vector>
 #include <sstream>
 
@@ -65,18 +67,22 @@ namespace seneca
 	};
 
 	Book* Book::createItem(const std::string& strBook) {
-		istringstream bookTokens(strBook);
+		if (strBook.empty() || strBook[0] == '#') throw invalid_argument("Not a valid Book.");
+
+		vector<string> bookTokens;
+		bookTokens = Book::split(strBook, ',');
 		string author, title, country, summary; 
 		unsigned short year; 
 		double price;
 
-		bookTokens >> author; 
-		bookTokens >> title;
-		bookTokens >> country;
-		bookTokens >> summary;
-		bookTokens >> year;
-		bookTokens >> price;
-
+		author = bookTokens[0]; 
+		title = bookTokens[1];
+		country = bookTokens[2]; 
+		price = stod(bookTokens[3]);
+		stringstream ss(bookTokens[4]);
+		ss >> year;
+		summary = bookTokens[5];
+		
 		return new Book(author, title, country, summary, year, price);	
 	};
 }
