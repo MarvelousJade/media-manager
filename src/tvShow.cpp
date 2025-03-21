@@ -71,12 +71,21 @@ namespace seneca {
 		string id;
 		string title, summary; 
 		unsigned short year; 
+		const int idxOfSummary = 3;
 
 		id = tvShowTokens[0]; 
 		title = tvShowTokens[1];
 		stringstream ss(tvShowTokens[2]);
 		ss >> year;
-		summary = tvShowTokens[3];
+
+
+		for (int i = idxOfSummary; i < tvShowTokens.size(); i++) {
+			if (i == idxOfSummary || i == tvShowTokens.size() - 1) {
+				summary += tvShowTokens[i];
+			} else {
+				summary = summary + ", " + tvShowTokens[i];
+			};
+		}; 
 		
 		return new TvShow(id, title, summary, year);	
 	};
