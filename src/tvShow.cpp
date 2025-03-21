@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <sstream>
 #include <numeric>
+#include <algorithm>
 #include "tvShow.h"
 #include "mediaItem.h"
 #include "settings.h"
@@ -122,7 +123,6 @@ namespace seneca {
 		
 		return longEpisodes;
 	};
-
 	
 	string TvShow::getId() const { return m_id; };
 } 

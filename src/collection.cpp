@@ -36,11 +36,11 @@ namespace seneca {
 	};
 
 	MediaItem* Collection::operator[](const std::string& title) const {
-		for (auto& m_item : m_mediaItems) {
-			if(m_item->getTitle() == title) return m_item;
-		};		
+		auto it = find_if(m_mediaItems.begin(), m_mediaItems.end(), [&title](const MediaItem* item ) -> bool {
+			return item->getTitle() == title; 
+		});	
 		
-		return nullptr;
+		return (it != m_mediaItems.end() ? *it : nullptr );
 	};
 
 	void Collection::removeQuotes() {
