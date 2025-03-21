@@ -44,24 +44,19 @@ namespace seneca {
 	};
 
 	void Collection::removeQuotes() {
-		for (auto& m_item : m_mediaItems) {
-			string title = m_item->getTitle();
-			string summary = m_item->getSummary();
+		for_each(m_mediaItems.begin(), m_mediaItems.end(), [](MediaItem* item) {
+			string title = item->getTitle();
+			string summary = item->getSummary();
+			if (!title.empty() && title.front() == '"' && title.back() == '"' ) {
+				title = title.substr(1, title.size() - 2); 
+				item->setTitle(title);
+			};
 
-			if (title.size() >= 2) {
-				if (title.front() == '"' && title.back() == '"') {
-					string newTitle = title.substr(1, title.size() - 2); 
-					m_item->setTitle(newTitle);
-				};
+			if (!summary.empty() && summary.front() == '"' && summary.back() == '"' ) {
+				summary = summary.substr(1, summary.size() - 2); 
+				item->setSummary(summary);
 			};
-			
-			if (summary.size() >= 2) {
-				if (summary.front() == '"' && summary.back() == '"') {
-					string newSummary = summary.substr(1, summary.size() - 2); 
-					m_item->setSummary(newSummary);
-				};
-			};
-		};
+		});	
 	};
 
 	void Collection::sort(const std::string& field) {	
