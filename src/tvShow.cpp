@@ -117,5 +117,8 @@ namespace seneca {
 		
 		return longEpisodes;
 	};
+
+	
+	string TvShow::getId() const { return m_id; };
 } 
 

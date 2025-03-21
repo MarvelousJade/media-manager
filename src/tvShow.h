@@ -32,6 +32,7 @@ namespace seneca {
 	public:
 		void display(std::ostream& out) const override;	
 		static TvShow* createItem(const std::string& strEpisode);
+		std::string getId() const;
 
 		template<typename Collection_t>
 		static void addEpisode(Collection_t& col, const std::string& strEpisode) {
@@ -44,6 +45,7 @@ namespace seneca {
 			unsigned short numberOverall, season, numberInSeason;
 			std::string airDate, title, summary; 
 			const int idxOfSummary = 7;
+			TvShow* tvShow = nullptr;
 
 			id = tvShowTokens[0]; 
 			numberOverall = stoi(tvShowTokens[1]);
@@ -63,13 +65,20 @@ namespace seneca {
 
 			title = tvShowTokens[6];
 
-			for (int i = idxOfSummary; i < tvShowTokens.size(); i++) {
-			if (i == idxOfSummary || i == tvShowTokens.size() - 1) {
-				summary += tvShowTokens[i];
-			} else {
-				summary = summary + ", " + tvShowTokens[i];
+			for (size_t i = idxOfSummary; i < tvShowTokens.size(); i++) {
+				if (i == idxOfSummary || i == tvShowTokens.size() - 1) {
+					summary += tvShowTokens[i];
+				} else {
+					summary = summary + ", " + tvShowTokens[i];
+				};
 			};
-		};
+			
+			for (size_t i = 0; i < col.size(); i++) {
+				tvShow = dynamic_cast<TvShow*>(col[i]);
+
+				if (tvShow->getId() == id) 
+					tvShow->m_episodes.push_back({tvShow, numberOverall, season, numberInSeason, airDate, length, title, summary});
+			};
 		};
 
 		double getEpisodeAverageLength() const;
