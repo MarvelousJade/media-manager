@@ -64,7 +64,7 @@ namespace seneca {
 	  };
 
 	TvShow* TvShow::createItem(const std::string& strShow) {
-		if (strShow.empty() || strShow[0] == '#') throw "Not a valid Book.";
+		if (strShow.empty() || strShow[0] == '#') throw "Not a valid show.";
 
 		vector<string> tvShowTokens;
 		tvShowTokens = Book::split(strShow, ',');
@@ -80,7 +80,7 @@ namespace seneca {
 
 
 		for (int i = idxOfSummary; i < tvShowTokens.size(); i++) {
-			if (i == idxOfSummary || i == tvShowTokens.size() - 1) {
+			if (i == idxOfSummary) {
 				summary += tvShowTokens[i];
 			} else {
 				summary = summary + ", " + tvShowTokens[i];

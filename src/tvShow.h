@@ -38,8 +38,8 @@ namespace seneca {
 		static void addEpisode(Collection_t& col, const std::string& strEpisode) {
 			if (strEpisode.empty() || strEpisode[0] == '#') throw "Not a valid Book.";
 
-			std::vector<std::string> tvShowTokens;
-			tvShowTokens = Book::split(strEpisode, ',');
+			std::vector<std::string> episodeTokens;
+			episodeTokens = Book::split(strEpisode, ',');
 			std::string id;
 			tm length;
 			unsigned short numberOverall, season, numberInSeason;
@@ -47,29 +47,30 @@ namespace seneca {
 			const int idxOfSummary = 7;
 			TvShow* tvShow = nullptr;
 
-			id = tvShowTokens[0]; 
-			numberOverall = stoi(tvShowTokens[1]);
+			id = episodeTokens[0]; 
+			numberOverall = stoi(episodeTokens[1]);
 
-			if (tvShowTokens[2].empty()) {
+			if (episodeTokens[2].empty()) {
 				season = 1;
 			} else {
-				season = stoi(tvShowTokens[2]);
+				season = stoi(episodeTokens[2]);
 			}
 
-			numberInSeason = stoi(tvShowTokens[3]);
+			numberInSeason = stoi(episodeTokens[3]);
 
-			airDate = tvShowTokens[4];
+			airDate = episodeTokens[4];
 
-			std::istringstream timeStream(tvShowTokens[5]);
+			std::istringstream timeStream(episodeTokens[5]);
 			timeStream >> std::get_time(&length, "%H:%M:%S"); 
 
-			title = tvShowTokens[6];
+			title = episodeTokens[6];
 
-			for (size_t i = idxOfSummary; i < tvShowTokens.size(); i++) {
-				if (i == idxOfSummary || i == tvShowTokens.size() - 1) {
-					summary += tvShowTokens[i];
+			// Concatenate summary with comma in between
+			for (size_t i = idxOfSummary; i < episodeTokens.size(); i++) {
+				if (i == idxOfSummary) {
+					summary += episodeTokens[i];
 				} else {
-					summary = summary + ", " + tvShowTokens[i];
+					summary = summary + ", " + episodeTokens[i];
 				};
 			};
 			
