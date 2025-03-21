@@ -43,6 +43,7 @@ namespace seneca {
 			tm length;
 			unsigned short numberOverall, season, numberInSeason;
 			std::string airDate, title, summary; 
+			const int idxOfSummary = 7;
 
 			id = tvShowTokens[0]; 
 			numberOverall = stoi(tvShowTokens[1]);
@@ -61,7 +62,14 @@ namespace seneca {
 			timeStream >> std::get_time(&length, "%H:%M:%S"); 
 
 			title = tvShowTokens[6];
-			summary = tvShowTokens[7];
+
+			for (int i = idxOfSummary; i < tvShowTokens.size(); i++) {
+			if (i == idxOfSummary || i == tvShowTokens.size() - 1) {
+				summary += tvShowTokens[i];
+			} else {
+				summary = summary + ", " + tvShowTokens[i];
+			};
+		};
 		};
 
 		double getEpisodeAverageLength() const;
