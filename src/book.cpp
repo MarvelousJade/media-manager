@@ -71,7 +71,7 @@ namespace seneca
 	};
 
 	Book* Book::createItem(const std::string& strBook) {
-		if (strBook.empty() || strBook[0] == '#') throw "Not a valid Book.";
+		if (strBook.empty() || strBook[0] == '#') throw "Not a valid book.";
 
 		vector<string> bookTokens;
 		bookTokens = Book::split(strBook, ',');
