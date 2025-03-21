@@ -21,6 +21,7 @@ namespace seneca {
 		MediaItem* operator[](const std::string& title) const;
 		void removeQuotes();
 		void sort(const std::string& field);
+		~Collection();
 	};
 	std::ostream& operator<<(std::ostream& os, const Collection& collection);
 }

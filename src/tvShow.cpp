@@ -93,20 +93,21 @@ namespace seneca {
 	};
 	
 	double TvShow::getEpisodeAverageLength() const {
-		if (m_episodes.empty()) return 0.0;
+		if(m_episodes.empty())
+		      return 0;
 
-		double totalSeconds = accumulate(
-			m_episodes.begin(), m_episodes.end(), 
-			(double)0.0, 
-			[](double total, const TvEpisode& episode) -> double {
-			double seconds = episode.m_length.tm_hour * 3600 
-				+ episode.m_length.tm_min * 60 
-				+ episode.m_length.tm_sec; 
+		const int anHour = 3600;	
+		double total = 0.0;
+		double seconds = 0.0;
 
-			return total += seconds ;
-		});
+		for (const auto& episode : m_episodes) {
+			seconds = episode.m_length.tm_hour * anHour + episode.m_length.tm_min * 60 + episode.m_length.tm_sec; 
+			
+			total += seconds;
+		};
 
-		return totalSeconds / m_episodes.size();
+		return total / m_episodes.size();
+
 	};
 
 	list<string> TvShow::getLongEpisodes() const {

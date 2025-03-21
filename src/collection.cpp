@@ -56,6 +56,11 @@ namespace seneca {
 				summary = summary.substr(1, summary.size() - 2); 
 				item->setSummary(summary);
 			};
+	
+			if (!summary.empty() && summary.back() == '"' ) {
+				summary = summary.substr(0, summary.size() - 1); 
+				item->setSummary(summary);
+			};		
 		});	
 	};
 
@@ -79,6 +84,12 @@ namespace seneca {
 		};
 
 		return os;
+	};
+	
+	Collection::~Collection() {
+		for (auto& item: m_mediaItems) {
+			delete item;
+		};	
 	};
 }
 	
