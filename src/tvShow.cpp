@@ -1,5 +1,6 @@
 #include <iomanip>
 #include <sstream>
+#include <numeric>
 #include "tvShow.h"
 #include "mediaItem.h"
 #include "settings.h"
@@ -93,12 +94,16 @@ namespace seneca {
 	double TvShow::getEpisodeAverageLength() const {
 		if (m_episodes.empty()) return 0.0;
 
-		double totalSeconds = 0;
+		double totalSeconds = accumulate(
+			m_episodes.begin(), m_episodes.end(), 
+			(double)0.0, 
+			[](double total, const TvEpisode& episode) -> double {
+			double seconds = episode.m_length.tm_hour * 3600 
+				+ episode.m_length.tm_min * 60 
+				+ episode.m_length.tm_sec; 
 
-		for (auto& episode : m_episodes) {
-			int seconds = episode.m_length.tm_hour * 3600 + episode.m_length.tm_min * 60 + episode.m_length.tm_sec; 
-			totalSeconds += seconds ;
-		};
+			return total += seconds ;
+		});
 
 		return totalSeconds / m_episodes.size();
 	};
