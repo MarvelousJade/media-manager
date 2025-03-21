@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 #include <ctime>
+#include <cstring>
 #include <iomanip>
 #include "mediaItem.h"
 #include "book.h"
@@ -42,6 +43,7 @@ namespace seneca {
 			episodeTokens = Book::split(strEpisode, ',');
 			std::string id;
 			tm length;
+			memset(&length, 0, sizeof(tm));	
 			unsigned short numberOverall, season, numberInSeason;
 			std::string airDate, title, summary; 
 			const int idxOfSummary = 7;
@@ -70,7 +72,12 @@ namespace seneca {
 				if (i == idxOfSummary) {
 					summary += episodeTokens[i];
 				} else {
+					if (i == idxOfSummary + 2 && !title.empty() &&title.back() != '"')  {
+						summary = summary + " , " + episodeTokens[i];
+					} else {
 					summary = summary + ", " + episodeTokens[i];
+					};
+			
 				};
 			};
 			
