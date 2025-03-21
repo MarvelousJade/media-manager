@@ -46,10 +46,19 @@ namespace seneca {
 	void Collection::removeQuotes() {
 		for (auto& m_item : m_mediaItems) {
 			string title = m_item->getTitle();
+			string summary = m_item->getSummary();
+
 			if (title.size() >= 2) {
 				if (title.front() == '"' && title.back() == '"') {
 					string newTitle = title.substr(1, title.size() - 2); 
 					m_item->setTitle(newTitle);
+				};
+			};
+			
+			if (summary.size() >= 2) {
+				if (summary.front() == '"' && summary.back() == '"') {
+					string newSummary = summary.substr(1, summary.size() - 2); 
+					m_item->setSummary(newSummary);
 				};
 			};
 		};
