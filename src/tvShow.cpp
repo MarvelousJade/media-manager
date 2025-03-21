@@ -79,7 +79,7 @@ namespace seneca {
 		ss >> year;
 
 
-		for (int i = idxOfSummary; i < tvShowTokens.size(); i++) {
+		for (size_t i = idxOfSummary; i < tvShowTokens.size(); i++) {
 			if (i == idxOfSummary) {
 				summary += tvShowTokens[i];
 			} else {
@@ -105,13 +105,13 @@ namespace seneca {
 
 	list<string> TvShow::getLongEpisodes() const {
 		list<string> longEpisodes;	
-		int hour = 3600;	
+		int anHour = 3600;	
 		int lengthInSeconds = 0;
 	
 		for (auto& episode : m_episodes) {
-			 lengthInSeconds = episode.m_length.tm_hour * 3600 + episode.m_length.tm_min * 60 + episode.m_length.tm_sec; 
+			 lengthInSeconds = episode.m_length.tm_hour * anHour + episode.m_length.tm_min * 60 + episode.m_length.tm_sec; 
 
-			if (lengthInSeconds >= 3600)
+			if (lengthInSeconds >= anHour)
 				longEpisodes.push_back(episode.m_title);
 		};
 		
