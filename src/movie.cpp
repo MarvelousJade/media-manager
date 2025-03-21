@@ -56,10 +56,18 @@ namespace seneca {
 		movieTokens = Book::split(strMovie, ',');
 		string author, title, country, summary; 
 		unsigned short year; 
-
+		const int idxOfSummary = 2;
+		
 		title = movieTokens[0];
 		year = stoi(movieTokens[1]);
-		summary = movieTokens[2];
+
+		for (size_t i = idxOfSummary; i < movieTokens.size(); i++) {
+			if (i == idxOfSummary) {
+				summary += movieTokens[i];
+			} else {
+				summary = summary + ", " + movieTokens[i];
+			};
+		};
 		
 		return new Movie(title, summary, year);	
 	};

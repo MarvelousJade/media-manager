@@ -36,7 +36,7 @@ namespace seneca {
 
 		template<typename Collection_t>
 		static void addEpisode(Collection_t& col, const std::string& strEpisode) {
-			if (strEpisode.empty() || strEpisode[0] == '#') throw "Not a valid Book.";
+			if (strEpisode.empty() || strEpisode[0] == '#') throw "Not a valid episode.";
 
 			std::vector<std::string> episodeTokens;
 			episodeTokens = Book::split(strEpisode, ',');

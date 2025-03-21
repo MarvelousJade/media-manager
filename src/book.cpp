@@ -78,6 +78,7 @@ namespace seneca
 		string author, title, country, summary; 
 		unsigned short year; 
 		double price;
+		const int idxOfSummary = 5;
 
 		author = bookTokens[0]; 
 		title = bookTokens[1];
@@ -85,7 +86,14 @@ namespace seneca
 		price = stod(bookTokens[3]);
 		stringstream ss(bookTokens[4]);
 		ss >> year;
-		summary = bookTokens[5];
+		
+		for (size_t i = idxOfSummary; i < bookTokens.size(); i++) {
+			if (i == idxOfSummary) {
+				summary += bookTokens[i];
+			} else {
+				summary = summary + ", " + bookTokens[i];
+			};
+		};
 		
 		return new Book(author, title, country, summary, year, price);	
 	};
